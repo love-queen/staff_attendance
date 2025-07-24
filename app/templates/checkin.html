@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Attendance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+   
+    <!-- Latest Bootstrap 5.3.0 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Optional: Custom CSS -->
+    <style>
+        body {
+           font-family: 'Poppins', sans-serif;
+           background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+           min-height: 100vh;
+           padding-top: 20px;
+        }
+        
+        .card, .table {
+        border-radius: 1rem;
+        }
+        
+        .container {
+        max-width: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+       }
+
+       @media (max-width: 768px) {
+          .form-label, .btn, .form-control, .form-select {
+            font-size: 14px;
+         }
+         h2, h3 {
+            font-weight: 20px;
+         }
+      }
+
+     .btn-custom {
+        background-color: #5e60ce;  /* Light purple */
+        color: white;
+        border: none;
+        transition: background-color 0.3s ease;
+     }
+
+     .btn-custom:hover {
+        background-color: #4a4bd2;  /* Darker when hovered */
+     }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center">
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+            
+               <div class="text-center mb-3">
+                 <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Company Logo" style="width: 150px;">
+               </div>
+               
+               <div class="card shadow-lg p-4">
+                    <div class="card-body">
+                        <h3 class="card-title text-center text-primary mb-4">📝 Staff Attendance</h3>
+
+                        <!-- Flash Message (if any) -->
+                        {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                              {{ messages[0] }}
+                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                          {% endif %}
+                        {% endwith %}
+
+                        <form method="POST" action="/submit">
+                            <div class="mb-3">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Department</label>
+                                <input type="text" name="department" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                 <label class="form-label">Check Type</label>
+                                 <select name="action" class="form-select" required>
+                                     <option value="Check In">Check In</option>
+                                     <option value="Check Out">Check Out</option>
+                                 </select>
+                          </div>
+
+                            <button type="submit" class="btn btn-custom w-100">✅ Submit Attendance</button>
+                        </form>
+
+                        <div class="text-center mt-4">
+                            <a href="/admin" class="text-decoration-none text-secondary">🔐 Admin Login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (for alert close button) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
