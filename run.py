@@ -1,7 +1,7 @@
 from flask import Flask
 from app.routes import main
 
-app = Flask(__name__)
+app = Flask(run.py)
 app.secret_key = "admin_harvesters"
 app.register_blueprint(main)
 
