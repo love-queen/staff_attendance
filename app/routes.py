@@ -103,13 +103,25 @@ def dashboard():
     if not session.get('admin_logged_in'):
         return redirect(url_for('main.admin_login'))
 
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
-    cursor.execute("""
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    filter_type = request.args.get('filter_type')
+
+    query = """
         SELECT id, name, department, date, check_in, check_out
         FROM attendance_merged
-        ORDER BY id ASC
-    """)
+    """
+    params = []
+
+    if start_date and end_date:
+        query += " WHERE date BETWEEN ? AND ?"
+        params.extend([start_date, end_date])
+
+    query += " ORDER BY id ASC"
+
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute(query, params)
     records = cursor.fetchall()
     conn.close()
 
